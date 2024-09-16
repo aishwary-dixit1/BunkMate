@@ -4,23 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalMapOf
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.proxymate.ui.ProxyMateTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.proxymate.navigation.MyAppNavigation
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,27 +24,30 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProxyMateTheme {
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Filled.Add,contentDescription = "Add"
-                            )
-                        }
+                    Surface(modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.Black)
+                        .padding(0.dp)
+                    ) {
+                        MyAppNavigation()
                     }
-                ) { paddingValues ->
-                    Surface(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn(modifier = Modifier.padding(paddingValues)) {
-                            items(items = mockCardDetails){ subject ->
-                                AttendanceCard(subjectDetails = subject)
-
-                            }
-
-                        }
-                    }
-                }
-
             }
         }
     }
 }
+@Composable
+fun MyApp(){
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "first_screen"){
+        composable("first_screen"){
+            SplashScreenDisplay(){
+                navController.navigate("second_screen")
+            }
+        }
+        composable("second_screen"){
+            AttendancePageDisplay()
+        }
+    }
+}
+
