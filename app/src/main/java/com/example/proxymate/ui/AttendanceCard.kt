@@ -39,9 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.proxymate.model.cardDetails
 var mockCardDetails:  MutableList<cardDetails> = mutableListOf(
-    cardDetails("Algorithm", 5, 0),
+    cardDetails("Algorithm", 8, 2),
     cardDetails("Python", 5, 10),
-    cardDetails("Architecture", 5, 0),
+    cardDetails("Architecture", 7, 9),
     cardDetails("Computation", 5, 0),
     cardDetails("HS", 5, 0)
 )
@@ -332,7 +332,7 @@ fun AttendanceCard(subjectDetails: cardDetails){
     
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun AttendancePageCardPreview(){
     AttendanceCard(mockCardDetails[0])
